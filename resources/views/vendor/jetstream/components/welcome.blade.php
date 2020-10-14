@@ -4,7 +4,7 @@
     </div>
 
     <div class="mt-8 text-2xl">
-        Welcome to BRUHOW easyDeck, a custom Jetstream application!
+        Welcome to BRUHOW famous easyDeck, a custom Jetstream application!
     </div>
 
     <div class="mt-6 text-gray-500">
