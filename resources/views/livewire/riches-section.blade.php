@@ -10,11 +10,11 @@
 
 {{--    <img class="img-responsive img-rounded" src="{{ asset('img/aceOfSpades.jpg')  }}" alt="Italian Trulli">--}}
 
-    <img alt="ace of spades card is missing..." src="{{ asset('img/aceOfSpades.jpg') }}"
-         srcset="{{asset('img/aceOfSpades.jpg 860w')}}
-             ,{{asset('img/aceOfSpades.jpg 640w')}}
-             ,{{asset('img/aceOfSpades.jpg 420w')}}
-             ,{{asset('img/aceOfSpades.jpg 320w')}}">
+    <img alt="ace of spades card is missing..." src="{{ asset('img/alpha_SVG/018.svg') }}"
+         srcset="{{asset('img/alpha_SVG/018.svg 860w')}}
+             ,{{asset('img/alpha_SVG/018.svg 640w')}}
+             ,{{asset('img/alpha_SVG/018.svg 420w')}}
+             ,{{asset('img/alpha_SVG/018.svg 320w')}}">
 
 
 </div>
