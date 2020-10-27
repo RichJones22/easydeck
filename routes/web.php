@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Person;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +18,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/person', function (Request $request) {
+
+    $hairColor = $request->input("color");
+
+    $person = new Person;
+
+    $person->setAttribute("hair_color",$hairColor);
+
+    if ($person->save()) {
+        echo "you saved a person with a hair colored ". $hairColor;
+    };
+});
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
