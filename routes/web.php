@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\Person;
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\PersonController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,16 +20,7 @@ Route::get('/', function () {
 });
 
 Route::get('/person', function (Request $request) {
-
-    $hairColor = $request->input("color");
-
-    $person = new Person;
-
-    $person->setAttribute("hair_color",$hairColor);
-
-    if ($person->save()) {
-        echo "you saved a person with a hair colored ". $hairColor;
-    };
+    (new PersonController)->create($request);
 });
 
 
