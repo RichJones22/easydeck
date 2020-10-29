@@ -8,6 +8,13 @@ class RichesSection extends Component
 {
     public $count=0;
 
+    public function __construct($id = null)
+    {
+        parent::__construct($id);
+
+        $this->count = 1;
+    }
+
     public function increment() {
         $this->count++;
     }
