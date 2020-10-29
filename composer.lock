@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "354ad3dbb2c38e167a9e69ac7d32a8f8",
+    "content-hash": "4631d36cd5fa09b11d91e151ca3b420f",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5209,6 +5209,60 @@
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
             "time": "2020-07-13T06:12:54+00:00"
+        },
+        {
+            "name": "vemcogroup/laravel-sparkpost-driver",
+            "version": "4.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vemcogroup/laravel-sparkpost-driver.git",
+                "reference": "22bd835cab0087313a67908abed2d9588d0dd2d2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vemcogroup/laravel-sparkpost-driver/zipball/22bd835cab0087313a67908abed2d9588d0dd2d2",
+                "reference": "22bd835cab0087313a67908abed2d9588d0dd2d2",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.3|^7.0.1",
+                "laravel/framework": "^7.0|^8.0",
+                "php": "^7.3",
+                "swiftmailer/swiftmailer": "^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Vemcogroup\\SparkPostDriver\\SparkPostDriverServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Vemcogroup\\SparkPostDriver\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Henrik B Hansen",
+                    "email": "hbh@vemcount.com",
+                    "homepage": "https://www.vemcogroup.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "SparkPost driver to use with Laravel 6.x|7.x|8.x",
+            "homepage": "https://github.com/vemcogroup/laravel-sparkpost-driver",
+            "keywords": [
+                "laravel",
+                "mail",
+                "sparkpost"
+            ],
+            "time": "2020-09-09T11:32:11+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
