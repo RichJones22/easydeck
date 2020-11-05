@@ -8,6 +8,7 @@ notes_scratch.txt
 .env
 .env.backup
 .phpunit.result.cachegit
+.phpunit.result.cache
 Homestead.json
 Homestead.yaml
 npm-debug.log

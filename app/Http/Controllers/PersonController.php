@@ -8,6 +8,16 @@ use App\Models\Person;
 class PersonController extends Controller
 {
     /**
+     * @var Person
+     */
+    private $person;
+
+    public function __construct()
+    {
+        $this->person = new Person;
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -20,30 +30,25 @@ class PersonController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param Request $request
      */
-    public function create(Request $request) : void
+    public function create()
     {
-        $hairColor = $request->input("color");
-
-        $person = new Person;
-
-        $person->setAttribute("hair_color",$hairColor);
-
-        if ($person->save()) {
-            echo "you saved a person with a hair colored ". $hairColor;
-        };
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
      */
-    public function store(Request $request)
+    public function store(Request $request) : void
     {
-        //
+        $hairColor = $request->input("color");
+
+        $this->getNewPerson()
+            ->setAttribute("hair_color",$hairColor)
+            ->save();
+
+        echo "you saved a person with a hair colored ". $hairColor;
     }
 
     /**
@@ -89,5 +94,15 @@ class PersonController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * New a Person Model and return it to caller...
+     *
+     * @return Person
+     */
+    private function getNewPerson() : Person
+    {
+        return $this->person;
     }
 }

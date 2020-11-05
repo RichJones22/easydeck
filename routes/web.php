@@ -1,12 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\Person;
-use Illuminate\Http\Request;
-use App\Http\Controllers\PersonController;
+use \App\Http\Controllers\PersonController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\RichController;
-use App\Http\Controllers\PostController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,6 +25,7 @@ Route::get('/person', function (Request $request) {
     (new PersonController)->create($request);
 });
 
+Route::get('/person', [PersonController::class, 'store']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
@@ -33,8 +33,11 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/riches-card', function () {
+Route::get('/riches-card', function () {
     return view('riches-card');
 })->name('riches-card');
+
+    Route::get('/PostIndex', [PostController::class, 'index']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/bruces-card', function () {
     return view('bruces-card');
