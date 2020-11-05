@@ -5,8 +5,12 @@
 
     <br>
     <br>
-    @foreach($posts as $post)
-        <div>post is: {{ $post }}</div>
+    @foreach($posts as $value)
+
+        <div class="flex">
+            <div class="text-2xl">post is:</div>
+            <div class="italic ml-4">post is: {{ $value->post }}</div>
+        </div>
         <hr>
     @endforeach
 
