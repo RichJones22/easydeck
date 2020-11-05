@@ -1,16 +1,11 @@
+<div class="py-12">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <livewire:bruces-section />
 
-<x-rich-layout>
-    <div class="display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-start;">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <livewire:riches-section />
-        </div>
+        {{--            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">--}}
+        {{--            </div>--}}
     </div>
-</x-rich-layout>
-
-
-
+</div>
 {{--<x-app-layout>--}}
 {{--    <x-slot name="header">--}}
 
@@ -21,9 +16,3 @@
 
 
 {{--</x-app-layout>--}}
-
-
-
-
-
-
