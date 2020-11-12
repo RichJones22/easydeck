@@ -9,7 +9,7 @@
 
         <div class="flex">
             <div class="text-2xl">post is:</div>
-            <div class="italic ml-4">post is: {{ $value->post }}</div>
+            <div class="italic ml-4"> {{ $value->post }}</div>
         </div>
         <hr>
     @endforeach

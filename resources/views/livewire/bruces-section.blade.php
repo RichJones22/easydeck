@@ -15,5 +15,4 @@
              ,{{asset('img/alpha_SVG/002.svg 420w')}}
              ,{{asset('img/alpha_SVG/002.svg 320w')}}">
 
-Bruce was Here
 </div>

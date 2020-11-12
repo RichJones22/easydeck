@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class PostController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -22,18 +24,24 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('post-create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+        (new Post)->setAttribute('post', $request->input(['post']))->save();
+
+//    dd($request->input(['post']));
+
+
+        return back()->with('success','Post saved...');
+
     }
 
     /**
