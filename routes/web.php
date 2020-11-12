@@ -36,7 +36,15 @@ Route::get('/riches-card', function () {
     return view('riches-card');
 })->name('riches-card');
 
+Route::get('/masterCardOne', function () {
+    return view('masterCardOne');
+})->name('masterCardOne');
+
     Route::get('/PostIndex', [PostController::class, 'index']);
+
+    Route::get('/PostCreate', [PostController::class, 'create'])->name('post.create');
+
+    Route::post('/PostCreate', [PostController::class, 'store'])->name('post.post');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/bruces-card', function () {
     return view('bruces-card');
@@ -50,7 +58,7 @@ Route::get('/tasks', [TaskController::class, 'rich']);
 
 Route::get('post', 'PostController@create')->name('post.create');
 Route::post('post', 'PostController@store')->name('post.store');
-Route::get('/posts', [PostController::class, 'index'])->name('posts');
+//Route::get('/posts', [PostController::class, 'index'])->name('posts');
 
 Route::get('/article/{post:slug}', 'PostController@show')->name('post.show');
 Route::post('/comment/store', 'CommentController@store')->name('comment.add');

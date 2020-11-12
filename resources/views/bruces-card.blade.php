@@ -1,18 +1,81 @@
-<div class="py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <livewire:bruces-section />
+<x-guest-layout>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-        {{--            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">--}}
-        {{--            </div>--}}
+             <div class="flex justify-between">
+                    <div>Logo</div>
+
+
+                    <div>Right</div>
+            </div>
+            <div>
+                <livewire:bruces-section />
+            </div>
+            <div>
+                    <p>
+                         Bruce Howard &copy 2000
+                    </p>
+
+             </div>
+        </div>
     </div>
-</div>
-{{--<x-app-layout>--}}
-{{--    <x-slot name="header">--}}
-
-{{--        <h2 class="font-semibold text-xl text-gray-800 leading-tight">--}}
-{{--            {{ __('Decks') }}--}}
-{{--        </h2>--}}
-{{--    </x-slot>--}}
+</x-guest-layout>
 
 
-{{--</x-app-layout>--}}
+
+
+
+
+
+
+
+
+
+{{--<html>--}}
+{{--<head>--}}
+{{--    <meta charset="utf-8">--}}
+{{--    <meta name="viewport" content="width=device-width, initial-scale=1">--}}
+
+{{--    <title>Bruce's Card</title>--}}
+
+{{--    <!-- Fonts -->--}}
+{{--    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">--}}
+
+
+{{--</head>--}}
+{{--     <div class="h-screen bg-blue">                                                                                                                                                            <div>--}}
+{{--        <div>--}}
+{{--            <p>Logo</p>--}}
+{{--        </div>--}}
+{{--        <div>--}}
+{{--            <p>Right</p>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--    <div>--}}
+{{--        <livewire:bruces-section /> --}}
+
+{{--    </div>--}}
+{{--    <div>--}}
+
+{{--        <p>--}}
+{{--             Bruce Howard &copy 2000--}}
+{{--        </p>--}}
+
+{{--    </div>--}}
+{{--</html>--}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

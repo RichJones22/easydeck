@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class PostController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +24,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('post-create');
     }
 
     /**
@@ -34,9 +35,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        (new Post())->save($request->all(['all'])  );
+        (new Post)->setAttribute('post', $request->input(['post']))->save();
+
+//    dd($request->input(['post']));
+
 
         return back()->with('success','Post saved...');
+
     }
 
     /**
