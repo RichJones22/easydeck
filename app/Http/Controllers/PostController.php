@@ -37,11 +37,9 @@ class PostController extends Controller
     {
         (new Post)->setAttribute('post', $request->input(['post']))->save();
 
-//    dd($request->input(['post']));
+        session()->flash('success','Post Saved...');
 
-
-        return back()->with('success','Post saved...');
-
+        return redirect()->route('post.index');
     }
 
     /**

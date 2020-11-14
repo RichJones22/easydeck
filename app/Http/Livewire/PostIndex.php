@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Post;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 
@@ -15,9 +14,6 @@ class PostIndex extends Component
         parent::__construct($id);
 
         $this->posts = DB::table('posts')->get('post');
-
-//        dd ($this->posts);
-
     }
 
     public function render()

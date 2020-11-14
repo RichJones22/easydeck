@@ -40,7 +40,7 @@ Route::get('/masterCardOne', function () {
     return view('masterCardOne');
 })->name('masterCardOne');
 
-    Route::get('/PostIndex', [PostController::class, 'index']);
+    Route::get('/PostIndex', [PostController::class, 'index'])->name('post.index');;
 
     Route::get('/PostCreate', [PostController::class, 'create'])->name('post.create');
 
