@@ -37,7 +37,7 @@ class PostController extends Controller
     {
         (new Post)->setAttribute('post', $request->input(['post']))->save();
 
-        session()->flash('success','Post Saved...');
+        flash('dude you rock!!!', "success")->dismissable();
 
         return redirect()->route('post.index');
     }

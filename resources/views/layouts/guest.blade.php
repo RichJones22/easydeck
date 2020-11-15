@@ -18,6 +18,16 @@
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.js" defer></script>
         @livewireScripts
 
+        <script>
+                setTimeout(function() {
+                    var loader = document.getElementById("autoRemove");
+                    loader.style.transition = '.5s';
+                    loader.style.opacity = '0';
+                    loader.style.visibility = 'hidden';
+                    loader.remove();
+                }, 3000);
+        </script>
+
     </head>
     <body>
         <div class="font-sans text-gray-900 antialiased">

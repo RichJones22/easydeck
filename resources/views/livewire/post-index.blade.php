@@ -20,6 +20,8 @@
         </form>
     </div>
 
+    <livewire:flash-container />
+
     <br>
     <br>
     @foreach($posts as $value)
