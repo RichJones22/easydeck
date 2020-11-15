@@ -40,11 +40,11 @@ Route::get('/masterCardOne', function () {
     return view('masterCardOne');
 })->name('masterCardOne');
 
-    Route::get('/PostIndex', [PostController::class, 'index'])->name('post.index');;
+Route::get('/PostIndex', [PostController::class, 'index'])
+    ->name('post.index');
 
-    Route::get('/PostCreate', [PostController::class, 'create'])->name('post.create');
-
-    Route::post('/PostCreate', [PostController::class, 'store'])->name('post.post');
+Route::post('/PostCreate', [PostController::class, 'store'])
+    ->name('post.create');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/bruces-card', function () {
     return view('bruces-card');
