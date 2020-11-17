@@ -25,7 +25,9 @@
                     loader.style.opacity = '0';
                     loader.style.visibility = 'hidden';
                     loader.remove();
-                }, 3000);
+                }, 1250);
+
+                // $('#autoRemove').delay(3000).fadeOut(350);
         </script>
 
     </head>

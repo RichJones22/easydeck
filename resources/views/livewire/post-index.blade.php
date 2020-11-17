@@ -20,18 +20,30 @@
         </form>
     </div>
 
+    @if ($errors->has('post'))
+        <span class="text-red-900">{{ $errors->first('post') }}</span>
+    @endif
+
     <livewire:flash-container />
 
     <br>
     <br>
+
+    @if(count($posts) == 0)
+        <div>be the first to enter a post...</div>
+    @endif
+
     @foreach($posts as $value)
-        <div class="flex">
-            <div class="text-2xl">post is:</div>
-            <div class="italic ml-4"> {{ $value->post }}</div>
+        <div class="flex justify-between">
+            <div class="flex">
+                <div class="text-2xl">post is:</div>
+                <div class="italic ml-4"> {{ $value->post }}</div>
+            </div>
+            <button class="inline-flex rounded-md p-1.5" wire:click="delete(' {{ $value->id }} ')">
+                &times;
+            </button>
         </div>
         <hr>
     @endforeach
-
-
 </div>
 
