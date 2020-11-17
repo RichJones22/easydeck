@@ -17,6 +17,8 @@ use App\Http\Controllers\RichController;
 |
 */
 
+
+
 Route::get('/', function () {
     return view('welcome');
 });
