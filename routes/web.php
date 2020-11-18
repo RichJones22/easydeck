@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\PersonController;
 use App\Http\Controllers\TaskController;
 use App\Http\Livewire\PostIndex;
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,7 +25,7 @@ Route::get('/', function () {
 });
 
 Route::get('/person', function (Request $request) {
-    (new PersonController)->create($request);
+    (new PersonController)->create();
 });
 
 Route::get('/person', [PersonController::class, 'store']);
