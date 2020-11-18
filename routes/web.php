@@ -15,6 +15,9 @@ use App\Http\Livewire\PostIndex;
 |
 */
 
+
+
+
 Route::get('/', function () {
     return view('welcome');
 });
