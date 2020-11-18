@@ -2,10 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\PersonController;
-use App\Http\Controllers\PostController;
 use App\Http\Controllers\TaskController;
-use App\Http\Controllers\RichController;
-
+use App\Http\Livewire\PostIndex;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,16 +39,9 @@ Route::get('/masterCardOne', function () {
 })->name('masterCardOne');
 
 
-
-
-Route::get('/PostIndex', [PostController::class, 'index'])
+// using a JetStream/LiveWire component instead of a controller...
+Route::get('/PostIndex', [PostIndex::class, 'index'])
     ->name('post.index');
-
-Route::post('/PostCreate', [PostController::class, 'store'])
-    ->name('post.create');
-
-
-
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/bruces-card', function () {
