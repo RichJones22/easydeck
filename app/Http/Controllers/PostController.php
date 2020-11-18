@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Livewire\PostIndex;
 use Illuminate\Http\Request;
-use App\Models\Post;
 
 class PostController extends Controller
 {
@@ -31,14 +31,21 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
+     * @param PostIndex $postIndex
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request, PostIndex $postIndex)
     {
-        (new Post)->setAttribute('post', $request->input(['post']))->save();
+        // validate use input
+        $this->validateInput($request);
 
-        flash('dude you rock!!!', "success")->dismissable();
+        // call PostIndex LiveWire component to perform the sql save.
+        $postIndex->add($request->input(['post']));
 
+        // send a flash message to user acknowledging record was added.
+        flash('dude you rock!!!', "success");
+
+        // redirect user back to the post.index route...
         return redirect()->route('post.index');
     }
 
@@ -85,5 +92,17 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * @param Request $request
+     */
+    protected function validateInput(Request $request): void
+    {
+        $request->validate([
+            'post' => 'required'
+        ], [
+            'post.required' => 'Post missing; Please enter a post...'
+        ]);
     }
 }
