@@ -1,14 +1,13 @@
 <x-guest-layout>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
-             <div class="flex justify-between">
+        <div class="flex flex-col justify-center items-center">
+{{--    <div class="py-12">--}}
+{{--        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">--}}
+            <div>
+             <div class="mx-auto sm:px-6 lg:px-8 flex justify-between">
                     <div>Logo</div>
-
-
                     <div>Right</div>
             </div>
-            <div>
+            <div class="border border-grey-200" >
                 <livewire:bruces-section />
             </div>
             <div>
