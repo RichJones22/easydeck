@@ -45,7 +45,7 @@
                 <div class="text-2xl">post is:</div>
                 <div class="italic ml-4"> {{ $key->post }}</div>
             </div>
-            <button class="inline-flex rounded-md p-1.5" wire:click="delete(' {{ $key->id }} ')">
+            <button id="delete" class="inline-flex rounded-md p-1.5" wire:click="delete(' {{ $key->id }} ')">
                 &times;
             </button>
         </div>
