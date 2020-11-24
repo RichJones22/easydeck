@@ -2,14 +2,13 @@
 
 namespace Tests\Browser;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
 class PostIndexTest extends DuskTestCase
 {
     /**
-     * test to see that our PostIndex1 view does not have any posts
+     * test to see that our PostIndex view does not have any posts
      *
      * @return void
      */
