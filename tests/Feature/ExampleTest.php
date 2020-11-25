@@ -18,14 +18,4 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
-
-    public function testRichTest()
-    {
-        $response = $this->get('/rich');
-
-        $response->assertSeeText("Laravel")
-            ->assertStatus(200);
-
-//        $response->assertStatus(200);
-    }
 }
