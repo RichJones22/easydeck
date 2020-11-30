@@ -35,7 +35,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 
-Route::get('/riches-card', function () {
+Route::middleware(['auth:sanctum', 'verified'])->get('/riches-card', function () {
     return view('riches-card');
 })->name('riches-card');
 
