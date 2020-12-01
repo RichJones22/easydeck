@@ -12,11 +12,14 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link  href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.css"  rel="stylesheet">
 
         @livewireStyles
 
         <!-- Scripts -->
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.js" defer></script>
+
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -38,5 +41,22 @@
         @stack('modals')
 
         @livewireScripts
+
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', (event) => {
+                Dropzone.options.imageUpload = {
+                    maxFilesize: 10,
+                    acceptedFiles: ".svg",
+                    // parallelUploads: 25,
+                    // uploadMultiple: false
+                    // maxFiles: 1,
+                    parallelUploads: 1,
+                    renameFile: function (file) {
+                        // console.log(file);
+                        return file.name;
+                    }
+                };
+            });
+        </script>
     </body>
 </html>

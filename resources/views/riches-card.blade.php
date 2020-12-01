@@ -11,7 +11,7 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 sm:px-20 bg-white border-b-2">
                     <div class="mt-8 text-2xl text-center">
-                        Please select a card from the below deck
+                        Card Manager
                     </div>
                 </div>
                 <div class="bg-gray-200 bg-opacity-25 grid grid-cols-1 md:grid-cols-2">
@@ -19,7 +19,16 @@
                         <livewire:riches-card-display />
                     </div>
                     <div class="p-6 place-self-center">
-                        <livewire:riches-section />
+                        <form action="/FileUpload"
+                              method="post"
+                              enctype="multipart/form-data"
+                              id="image-upload"
+                              class="dropzone">
+                            @csrf
+                            <div>
+                                <h3>Upload Multiple Image By Click On Box</h3>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

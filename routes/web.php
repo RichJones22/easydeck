@@ -5,6 +5,7 @@ use \App\Http\Controllers\PersonController;
 use App\Http\Controllers\TaskController;
 use App\Http\Livewire\PostIndex;
 use Illuminate\Http\Request;
+use App\Http\Controllers\FileUpload;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,7 @@ Route::get('/masterCardOne', function () {
 Route::get('/PostIndex', [PostIndex::class, 'index'])
     ->name('post.index');
 
+Route::post('/FileUpload', [FileUpload::class, 'store']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/bruces-card', function () {
     return view('bruces-card');
