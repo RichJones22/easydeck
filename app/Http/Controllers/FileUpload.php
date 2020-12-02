@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class FileUpload extends Controller
 {
@@ -39,7 +38,7 @@ class FileUpload extends Controller
 
         $imageName = $image->getClientOriginalName();
 
-        $image->move(public_path('images'),$imageName);
+        $image->move(storage_path('images'),$imageName);
 
         return response(['success'=>$image->getClientOriginalName()]);
     }

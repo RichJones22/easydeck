@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class RichesCardDisplay extends Component
@@ -63,14 +62,8 @@ class RichesCardDisplay extends Component
      */
     protected function getAllCardsForDeck()
     {
-//        // later this will be a DB call; stubbed for now...
-//        $this->cards = [
-//            "img/alpha_SVG/001.svg",
-//            "img/alpha_SVG/002.svg",
-//            "img/alpha_SVG/003.svg"
-//        ];
-
-        $dir = public_path('images');
+//        // later this will be a DB call; storing on file system for now.
+        $dir = storage_path('images');
 
         $this->cards = scandir($dir);
 
