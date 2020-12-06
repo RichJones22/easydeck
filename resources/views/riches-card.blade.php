@@ -19,16 +19,7 @@
                         <livewire:riches-card-display />
                     </div>
                     <div class="p-6 place-self-center">
-                        <form action="/FileUpload"
-                              method="post"
-                              enctype="multipart/form-data"
-                              id="image-upload"
-                              class="dropzone">
-                            @csrf
-                            <div>
-                                <h3>Upload Multiple Image By Click On Box</h3>
-                            </div>
-                        </form>
+                        <livewire:dz-card-file-upload />
                     </div>
                 </div>
                 <div class="p-6 sm:px-20 bg-white border-t-2">
@@ -39,27 +30,6 @@
             </div>
         </div>
     </div>
-
-    <script type="text/javascript">
-
-        // the below is needed for the above form '/FileUpload' which
-        // uses dropzone...
-        document.addEventListener('DOMContentLoaded', (event) => {
-            Dropzone.options.imageUpload = {
-                maxFilesize: 10,
-                acceptedFiles: ".svg",
-                // parallelUploads: 25,
-                // uploadMultiple: false
-                // maxFiles: 1,
-                parallelUploads: 1,
-                renameFile: function (file) {
-                    // console.log(file);
-                    return file.name;
-                }
-            };
-        });
-    </script>
-
 </x-app-layout>
 
 

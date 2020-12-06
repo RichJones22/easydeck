@@ -17,6 +17,13 @@ class RichesCardDisplay extends Component
     protected $lastCardPos = 0;
 
     /**
+     * listen for client side events and then call respective methods...
+     *
+     * @var string[]
+     */
+    protected $listeners = ['riches-card-display' => 'getAllCardsForDeck'];
+
+    /**
      * RichesCardDisplay constructor.
      * @param null $id
      */
@@ -60,7 +67,7 @@ class RichesCardDisplay extends Component
     /**
      * get all cards
      */
-    protected function getAllCardsForDeck()
+    public function getAllCardsForDeck()
     {
 //        // later this will be a DB call; storing on file system for now.
         $dir = storage_path('images');
