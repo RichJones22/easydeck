@@ -31,9 +31,34 @@
                         </form>
                     </div>
                 </div>
+                <div class="p-6 sm:px-20 bg-white border-t-2">
+                    <div class="mt-8 text-2xl text-center">
+                        list of cards
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+
+        // the below is needed for the above form '/FileUpload' which
+        // uses dropzone...
+        document.addEventListener('DOMContentLoaded', (event) => {
+            Dropzone.options.imageUpload = {
+                maxFilesize: 10,
+                acceptedFiles: ".svg",
+                // parallelUploads: 25,
+                // uploadMultiple: false
+                // maxFiles: 1,
+                parallelUploads: 1,
+                renameFile: function (file) {
+                    // console.log(file);
+                    return file.name;
+                }
+            };
+        });
+    </script>
 
 </x-app-layout>
 

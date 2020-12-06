@@ -42,21 +42,5 @@
 
         @livewireScripts
 
-        <script type="text/javascript">
-            document.addEventListener('DOMContentLoaded', (event) => {
-                Dropzone.options.imageUpload = {
-                    maxFilesize: 10,
-                    acceptedFiles: ".svg",
-                    // parallelUploads: 25,
-                    // uploadMultiple: false
-                    // maxFiles: 1,
-                    parallelUploads: 1,
-                    renameFile: function (file) {
-                        // console.log(file);
-                        return file.name;
-                    }
-                };
-            });
-        </script>
     </body>
 </html>
