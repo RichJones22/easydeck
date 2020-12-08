@@ -5,6 +5,7 @@ use \App\Http\Controllers\PersonController;
 use App\Http\Controllers\TaskController;
 use App\Http\Livewire\PostIndex;
 use Illuminate\Http\Request;
+use App\Http\Controllers\FileUpload;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +36,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 
-Route::get('/riches-card', function () {
+Route::middleware(['auth:sanctum', 'verified'])->get('/riches-card', function () {
     return view('riches-card');
 })->name('riches-card');
 
@@ -48,6 +49,7 @@ Route::get('/masterCardOne', function () {
 Route::get('/PostIndex', [PostIndex::class, 'index'])
     ->name('post.index');
 
+Route::post('/FileUpload', [FileUpload::class, 'store']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/bruces-card', function () {
     return view('bruces-card');
