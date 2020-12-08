@@ -68,5 +68,8 @@ Route::post('/comment/store', 'CommentController@store')->name('comment.add');
 Route::post('/reply/store', 'CommentController@replyStore')->name('reply.add');
 
 
+Route::middleware(['auth:sanctum', 'verified'])->get('/lessons', function () {
+    return view('lessons');
+})->name('lessons');
 
 
