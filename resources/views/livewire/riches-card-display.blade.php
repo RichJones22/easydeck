@@ -11,9 +11,13 @@
                  srcset="{{asset($currentCard . ' 860w')}}
                      ,{{asset($currentCard . ' 640w')}}
                      ,{{asset($currentCard . ' 420w')}}
-                     ,{{asset($currentCard . ' 320w')}}">
+                     ,{{asset($currentCard . ' 320w')}}"
+            >
         </div>
 
+{{--        <span>{{ $firstCardPos }}</span>--}}
+{{--        <span>{{ $currentCardPos }}</span>--}}
+{{--        <span>{{ $lastCardPos }}</span>--}}
         <div class="flex items-center mt-2">
             <button wire:click="decrement" class="ml-5 mr-1">[-]</button>
             <button wire:click="increment">[+]</button>

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use Illuminate\Support\Facades\DB;
 
 class RichesCardDisplay extends Component
 {
@@ -10,42 +11,59 @@ class RichesCardDisplay extends Component
 
     public $currentCardPos = 0;
 
-    protected $cards = [];
+    public $cards = [];
 
-    protected $firstCardPos = 0;
+    public $firstCardPos = 0;
 
-    protected $lastCardPos = 0;
+    public $lastCardPos = 0;
 
     /**
      * listen for client side events and then call respective methods...
      *
      * @var string[]
      */
-    protected $listeners = ['riches-card-display' => 'getAllCardsForDeck'];
+    protected $listeners = [
+        'riches-card-display' => 'render',
+        'delete-riches-card-display' => 'cardDeleted'
+    ];
 
-    /**
-     * RichesCardDisplay constructor.
-     * @param null $id
-     */
-    public function __construct($id = null)
+    public function render()
     {
-        parent::__construct($id);
+        $this->getAllCards();
 
-        $this->getAllCardsForDeck();
+        return view('livewire.riches-card-display');
     }
 
     /**
+     * used to set the currentCardPos on a delete.
+     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function render()
+    public function cardDeleted()
     {
+        // I need to replace the below array values with id's from the
+        // model.  I can then get the id from passed into this method
+        // to compare if the card being deleted is less than currentCardPos.
+        // then the below code will work, once I uncomment the below else
+        // statement.
+        $this->getAllCards(function() {
+            if ($this->currentCardPos > $this->lastCardPos) {
+                $this->currentCardPos = $this->currentCardPos -1;
+            }
+//            else
+//            if ($this->currentCardPos !== $this->firstCardPos){
+//                $this->currentCardPos = $this->currentCardPos -1;
+//            }
+        });
+
         return view('livewire.riches-card-display');
     }
 
     /**
      * go to next card
      */
-    public function increment() {
+    public function increment()
+    {
         if ($this->currentCardPos < $this->lastCardPos) {
             $this->currentCardPos++;
 
@@ -66,39 +84,40 @@ class RichesCardDisplay extends Component
 
     /**
      * get all cards
+     *
+     * @param $setCurrentPos
      */
-    public function getAllCardsForDeck()
+    public function getAllCards($setCurrentPos = null)
     {
-//        // later this will be a DB call; storing on file system for now.
-        $dir = storage_path('images');
+        // get cards from db; db returns a Collection type.
+        /** @var \Illuminate\Support\Collection $collection */
+        $collection = DB::table('cards')
+            ->get(['id','file_name']);
 
-        $this->cards = scandir($dir);
-
-        $this->cards = array_filter(scandir($dir), function($item) {
-            return $item[0] !== '.';
-        });
-
-        foreach ($this->cards as &$value) {
-            $value = 'img/alpha_SVG/' . $value;
-        }
-        unset($value);
-
-        $this->cards = array_values($this->cards);
-
-        if (empty($this->cards)) {
+        // early exit, if there are no cards.
+        if ($collection->isEmpty()) {
+            $this->currentCard = null;
             return;
         }
 
-        // get first card position
-        if (! $this->cards[0]) {
-            $this->firstCardPos = 0;
-        }
+        // init cards array
+        $this->cards = [];
+
+        // populate the $this->cards array
+        $collection->each(function ($card) {
+            $this->cards[] = 'img/alpha_SVG/'.$card->file_name;
+        });
+
+        // set firstCardPos and currentCardPos to 0
+        $this->firstCardPos = 0;
 
         // get last card position
-        $this->lastCardPos = count($this->cards) -1;
+        $this->lastCardPos = $collection->count() -1;
 
-        // set currentCardPos to the first card
-        $this->currentCardPos = 0;
+        // set currentCardPos
+        if ($setCurrentPos !== null) {
+            $setCurrentPos();
+        }
 
         // set the '$currentCard' value
         $this->setCurrentCard();

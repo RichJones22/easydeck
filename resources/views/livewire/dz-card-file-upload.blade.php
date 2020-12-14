@@ -16,8 +16,9 @@
         // uses dropzone...
         document.addEventListener('DOMContentLoaded', (event) => {
             Dropzone.options.imageUpload = {
-                maxFilesize: 10,          // max size is 10mg.
+                maxFilesize: 10,          // max size is 10mg
                 acceptedFiles: ".svg",    // only accept .svg for now
+                parallelUploads: 1,       // only download one file at a time
                 renameFile: function (file) {
                     // console.log(file);
                     return file.name;
@@ -31,7 +32,7 @@
                     Livewire.emit('riches-card-display');
                     setTimeout(function() {
                         Livewire.emit('dz-card-file-upload');
-                    }, 4000);
+                    }, 500);
                 }
             };
         });

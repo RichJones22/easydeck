@@ -24,7 +24,7 @@
                 </div>
                 <div class="p-6 sm:px-20 bg-white border-t-2">
                     <div class="mt-8 text-2xl text-center">
-                        list of cards
+                        <livewire:downloaded-cards />
                     </div>
                 </div>
             </div>

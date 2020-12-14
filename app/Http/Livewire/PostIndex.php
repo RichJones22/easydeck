@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Post;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 
@@ -49,7 +50,7 @@ class PostIndex extends Component
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function submitForm()
+    public function submitForm() : RedirectResponse
     {
         // validate use input
         $this->validateInput();

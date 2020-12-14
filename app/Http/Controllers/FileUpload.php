@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\card;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FileUpload extends Controller
 {
@@ -38,7 +40,7 @@ class FileUpload extends Controller
 
         $imageName = $image->getClientOriginalName();
 
-        $image->move(storage_path('images'),$imageName);
+        $this->storeImage($image, $imageName);
 
         return response(['success'=>$image->getClientOriginalName()]);
     }
@@ -87,4 +89,54 @@ class FileUpload extends Controller
     {
         //
     }
+
+    /**
+     * @param \Illuminate\Http\UploadedFile|null $image
+     * @param string $imageName
+     */
+    protected function storeImage(?\Illuminate\Http\UploadedFile $image, string $imageName): void
+    {
+        $this->moveImageToFileSystem($image, $imageName);
+
+        $this->addCard($imageName);
+    }
+
+    /**
+     * @param \Illuminate\Http\UploadedFile|null $image
+     * @param string $imageName
+     */
+    protected function moveImageToFileSystem(?\Illuminate\Http\UploadedFile $image, string $imageName): void
+    {
+        $image->move(storage_path('images'), $imageName);
+    }
+
+    /**
+     * @param string $imageName
+     */
+    protected function addCard(string $imageName): void
+    {
+        /**
+         * if card() does not exist, create it...
+         *
+         * we can download the same image more than once
+         */
+        if (!$this->doesImageExist($imageName)) {
+            (new card())
+                ->setAttribute('file_name', $imageName)
+                ->setAttribute('file_location', storage_path('images'))
+                ->save();
+        }
+    }
+
+    /**
+     * @param string $imageName
+     * @return bool
+     */
+    protected function doesImageExist(string $imageName): bool
+    {
+        return DB::table('cards')
+                ->where('file_name', $imageName)
+                ->count(('file_name')) > 0;
+    }
+
 }
