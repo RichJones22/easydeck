@@ -29,7 +29,7 @@
                 // this event is picked up by the RichesCardDisplay.php
                 // Livewire server component.
                 queuecomplete: function () {
-                    Livewire.emit('riches-card-display');
+                    // Livewire.emit('riches-card-display');
                     setTimeout(function() {
                         Livewire.emit('dz-card-file-upload');
                     }, 500);

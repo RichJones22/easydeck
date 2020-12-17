@@ -24,48 +24,55 @@ class RichesCardDisplay extends Component
      */
     protected $listeners = [
         'riches-card-display' => 'render',
-        'delete-riches-card-display' => 'cardDeleted'
+        'display-card' => 'displayCard',
+        'delete-riches-card-display' => 'cardDeleted',
     ];
+
+    public function __construct($id = null)
+    {
+        parent::__construct($id);
+
+        $this->getAllCards();
+    }
 
     public function render()
     {
-        $this->getAllCards();
-
         return view('livewire.riches-card-display');
     }
 
-    /**
-     * used to set the currentCardPos on a delete.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function cardDeleted()
+    public function displayCard($id)
     {
-        // I need to replace the below array values with id's from the
-        // model.  I can then get the id from passed into this method
-        // to compare if the card being deleted is less than currentCardPos.
-        // then the below code will work, once I uncomment the below else
-        // statement.
-        $this->getAllCards(function() {
-            if ($this->currentCardPos > $this->lastCardPos) {
-                $this->currentCardPos = $this->currentCardPos -1;
-            }
-//            else
-//            if ($this->currentCardPos !== $this->firstCardPos){
-//                $this->currentCardPos = $this->currentCardPos -1;
-//            }
-        });
+        $this->currentCardPos = $id;
 
-        return view('livewire.riches-card-display');
+        $this->setCurrentCard();
     }
 
     /**
-     * go to next card
+     * @param $id
+     */
+    public function cardDeleted($id)
+    {
+        $this->getAllCards(function() use($id) {
+
+//            dd("id is ".$id." firstCard is ".$this->currentCardPos);
+
+            if ($id < $this->firstCardPos) {
+                $this->currentCardPos = $this->getNextCardsId($id);
+            }
+
+            if ($id > $this->lastCardPos) {
+                $this->currentCardPos = $this->getPreviousCardsId($id);
+            }
+        });
+    }
+
+    /**
+     *
      */
     public function increment()
     {
         if ($this->currentCardPos < $this->lastCardPos) {
-            $this->currentCardPos++;
+            $this->currentCardPos = $this->getNextCardsId($this->currentCardPos);
 
             $this->setCurrentCard();
         }
@@ -76,7 +83,7 @@ class RichesCardDisplay extends Component
      */
     public function decrement() {
         if ($this->currentCardPos > $this->firstCardPos) {
-            $this->currentCardPos--;
+            $this->currentCardPos = $this->getPreviousCardsId($this->currentCardPos);
 
             $this->setCurrentCard();
         }
@@ -105,16 +112,19 @@ class RichesCardDisplay extends Component
 
         // populate the $this->cards array
         $collection->each(function ($card) {
-            $this->cards[] = 'img/alpha_SVG/'.$card->file_name;
+            $this->cards[$card->id] = 'img/alpha_SVG/'.$card->file_name;
         });
 
         // set firstCardPos and currentCardPos to 0
-        $this->firstCardPos = 0;
+        $this->firstCardPos = $collection->first()->id;
 
         // get last card position
-        $this->lastCardPos = $collection->count() -1;
+        $this->lastCardPos = $collection->last()->id;
 
         // set currentCardPos
+        if ($this->currentCardPos === 0) {
+            $this->currentCardPos = $this->firstCardPos;
+        }
         if ($setCurrentPos !== null) {
             $setCurrentPos();
         }
@@ -130,4 +140,27 @@ class RichesCardDisplay extends Component
     {
         $this->currentCard = $this->cards[$this->currentCardPos];
     }
+
+    /**
+     * @return int
+     */
+    protected function getNextCardsId($id): int
+    {
+        $collection = DB::table('cards')
+            ->get(['id', 'file_name'])->where('id', '>', $id)->first();
+
+        return $collection->id;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getPreviousCardsId($id): int
+    {
+        $collection = DB::table('cards')
+            ->get(['id', 'file_name'])->where('id', '<', $id)->last();
+
+        return $collection->id;
+    }
+
 }
