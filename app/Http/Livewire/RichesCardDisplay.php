@@ -54,15 +54,24 @@ class RichesCardDisplay extends Component
     {
         $this->getAllCards(function() use($id) {
 
-//            dd("id is ".$id." firstCard is ".$this->currentCardPos);
-
+            // we deleted the first card
             if ($id < $this->firstCardPos) {
                 $this->currentCardPos = $this->getNextCardsId($id);
             }
-
+            else
+            // we deleted the last card
             if ($id > $this->lastCardPos) {
                 $this->currentCardPos = $this->getPreviousCardsId($id);
             }
+            else
+            // we deleted the current card
+            if ($id == $this->currentCardPos) {
+                // the first and last card are not the same...
+                if ($this->firstCardPos <> $this->lastCardPos) {
+                    $this->currentCardPos = $this->getPreviousCardsId($id);
+                }
+            }
+
         });
     }
 
