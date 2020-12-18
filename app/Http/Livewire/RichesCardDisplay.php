@@ -54,17 +54,19 @@ class RichesCardDisplay extends Component
     {
         $this->getAllCards(function() use($id) {
 
-            // we deleted the first card
+            // deleting towards the beginning of the cards array
             if ($id < $this->firstCardPos) {
                 $this->currentCardPos = $this->getNextCardsId($id);
             }
             else
-            // we deleted the last card
+            // deleting towards the ending of the cards array
             if ($id > $this->lastCardPos) {
-                $this->currentCardPos = $this->getPreviousCardsId($id);
+                if ($this->currentCardPos <> $this->firstCardPos) {
+                    $this->currentCardPos = $this->getPreviousCardsId($id);
+                }
             }
             else
-            // we deleted the current card
+            // deleting in the middle of the cards array
             if ($id == $this->currentCardPos) {
                 // the first and last card are not the same...
                 if ($this->firstCardPos <> $this->lastCardPos) {
@@ -106,7 +108,6 @@ class RichesCardDisplay extends Component
     public function getAllCards($setCurrentPos = null)
     {
         // get cards from db; db returns a Collection type.
-        /** @var \Illuminate\Support\Collection $collection */
         $collection = DB::table('cards')
             ->get(['id','file_name']);
 
@@ -124,16 +125,18 @@ class RichesCardDisplay extends Component
             $this->cards[$card->id] = 'img/alpha_SVG/'.$card->file_name;
         });
 
-        // set firstCardPos and currentCardPos to 0
+        // set firstCardPos
         $this->firstCardPos = $collection->first()->id;
 
-        // get last card position
+        // set lastCardPos
         $this->lastCardPos = $collection->last()->id;
 
         // set currentCardPos
         if ($this->currentCardPos === 0) {
             $this->currentCardPos = $this->firstCardPos;
         }
+
+        // override currentCardPos if $setCurrentPos is not null
         if ($setCurrentPos !== null) {
             $setCurrentPos();
         }
