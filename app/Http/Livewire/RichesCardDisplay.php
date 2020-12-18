@@ -7,15 +7,15 @@ use Illuminate\Support\Facades\DB;
 
 class RichesCardDisplay extends Component
 {
-    public $currentCard = null;
-
-    public $currentCardPos = 0;
-
     public $cards = [];
+
+    public $currentCard = null;
 
     public $firstCardPos = 0;
 
     public $lastCardPos = 0;
+
+    public $currentCardPos = 0;
 
     /**
      * listen for client side events and then call respective methods...
@@ -48,6 +48,8 @@ class RichesCardDisplay extends Component
     }
 
     /**
+     * after a card is deleted, determine the current card position.
+     *
      * @param $id
      */
     public function cardDeleted($id)
@@ -55,30 +57,39 @@ class RichesCardDisplay extends Component
         $this->getAllCards(function() use($id) {
 
             // deleting towards the beginning of the cards array
+            if ($id < $this->currentCardPos) {
+                return;
+            }
+            else
+            // deleting towards the ending of the cards array
+            if ($id > $this->currentCardPos) {
+                return;
+            }
+            else
+            // deleting first card
             if ($id < $this->firstCardPos) {
                 $this->currentCardPos = $this->getNextCardsId($id);
             }
             else
-            // deleting towards the ending of the cards array
+            // delete last card
             if ($id > $this->lastCardPos) {
                 if ($this->currentCardPos <> $this->firstCardPos) {
                     $this->currentCardPos = $this->getPreviousCardsId($id);
                 }
             }
             else
-            // deleting in the middle of the cards array
+            // deleting a selected card
             if ($id == $this->currentCardPos) {
-                // the first and last card are not the same...
+                // the selected card is a middle card
                 if ($this->firstCardPos <> $this->lastCardPos) {
                     $this->currentCardPos = $this->getPreviousCardsId($id);
                 }
             }
-
         });
     }
 
     /**
-     *
+     * go to next card
      */
     public function increment()
     {
@@ -154,6 +165,8 @@ class RichesCardDisplay extends Component
     }
 
     /**
+     * get next card id
+     *
      * @return int
      */
     protected function getNextCardsId($id): int
@@ -165,6 +178,8 @@ class RichesCardDisplay extends Component
     }
 
     /**
+     * get previous card id
+     *
      * @return int
      */
     protected function getPreviousCardsId($id): int
