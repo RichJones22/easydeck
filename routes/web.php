@@ -70,8 +70,18 @@ Route::post('/comment/store', 'CommentController@store')->name('comment.add');
 Route::post('/reply/store', 'CommentController@replyStore')->name('reply.add');
 
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/lessons', function () {
+Route::get('/landing', function () {
+    return view('components.landing-layout');
+})->name('components.landing-layout');
+
+Route::get('/lessons', function () {
     return view('lessons');
 })->name('lessons');
+
+Route::get('/lessons-menu', function () {
+    return view('lessons-menu');
+})->name('lessons-menu');
+
+
 
 

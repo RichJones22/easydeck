@@ -19,11 +19,72 @@
             <body class="font-serif bg-green text-grey-900">
 
             <!-- Primary Page Layout
-            –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+            <!--NewLayout
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+            <div class="h-screen flex flex-wrap">
+                <div class="bg-white w-1/4 h-1/8"><livewire:ed-logo /></div>
+                <div class="bg-white w-1/2 h-1/8 flex justify-center items-center">B</div>
+                <div class="bg-white w-1/4 h-1/8 flex justify-center items-center">C</div>
+                <div class="bg-gray-400 text-white w-1/4 h-1/8 flex justify-center items-center" >G</div>
+                <div class="bg-gray-600 text-white w-1/2 h-1/8 flex justify-center items-center" >H</div>
+                <div class="bg-gray-800 text-white w-1/4 h-1/8 flex justify-center items-center">I</div>
+                <div class="bg-gray-400 text-white w-1/4 h-1/8 flex justify-center items-center" >G</div>
+                <div class="bg-gray-600 text-white w-1/2 h-1/8 flex justify-center items-center" >H</div>
+                <div class="bg-gray-800 text-white w-1/4 h-1/8 flex justify-center items-center">I</div>
+            </div>
+            <div class="h-screen flex flex-wrap">
+                <div class="bg-white w-1/4 h-1/8"><livewire:ed-logo /></div>
+                <div class="bg-white w-1/2 h-1/8 flex justify-center items-center">B</div>
+                <div class="bg-white w-1/4 h-1/8 flex justify-center items-center">C</div>
+                <div class="flex w-1/4 h-3/4 ">
+                    <div class="bg-green-400 p-2 m-2 w-full ">D</div>
+                </div>
+                <div class="flex w-1/2 h-3/4">
+                    <div class="bg-red-500 m-2 w-full p-2"><img src="../img/santaSVG.svg" class="h-full w-full"/></div>
+                </div>
+                <div class="flex  w-1/4 h-3/4 ">
+                    <div class="bg-green-400 m-2 w-full p-2">F</div>
+                </div>
+                <div class="bg-gray-400 text-white w-1/4 h-1/8 flex justify-center items-center" >G</div>
+                <div class="bg-gray-600 text-white w-1/2 h-1/8 flex justify-center items-center" >H</div>
+                <div class="bg-gray-800 text-white w-1/4 h-1/8 flex justify-center items-center">I</div>
+            </div>
+            <br/><br/>
+
             <p class="text-xl bg-blue-100 p-2">lesson playground</p>
+            <!--Tailwind REM
+           –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+            <div class="bg-gray-500 text-8 w-32">
+            Tailwind REM
+            </div>
 
             <!--FLEXBOX
            –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+            <h1 class="text-xl bg-gray-100 p-2">Flexbox</h1>
+            <div class="flex justify-center p-2">
+                <div class="text-center bg-red-300 w-32 h-32">First Div</div>
+                <div class="text-center bg-yellow-300 w-32 h-32">Second Div</div>
+                <div class="text-center bg-blue-300 w-32 h-32">Third Div</div>
+            </div>
+
+            <h1 class="text-xl bg-gray-100 p-2">lesson P002b</h1>
+{{--            $animals = ['Unicorn', 'Gorilla', 'Horse', 'Wolf';--}}
+
+            $animals = [];
+            $animal[] = 'Unicorn';
+            $animal[] = 'Gorilla';
+            $animal[] = 'Horse';
+            $animal[] = 'Wolf';
+
+            print_r($people);
+            <h1 class="text-xl bg-gray-100 p-2">lesson L001aEcho</h1>
+
+            @{{echo this}}
+            !!quo echo this!!
+            @{{@/{{echo this}}}}
+
             <h1 class="text-xl bg-gray-100 p-2">Flexbox</h1>
             <div class="flex justify-center p-2">
                 <div class="text-center bg-red-300 w-32 h-32">First Div</div>
