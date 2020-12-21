@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
-use App\Models\card;
 
 class DownloadedCards extends Component
 {
@@ -40,7 +39,7 @@ class DownloadedCards extends Component
             DB::table('cards')->delete($id);
         }
 
-        $this->emit('delete-riches-card-display');
+        $this->emit('delete-riches-card-display', $id);
     }
 
 

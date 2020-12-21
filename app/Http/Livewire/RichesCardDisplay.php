@@ -7,15 +7,15 @@ use Illuminate\Support\Facades\DB;
 
 class RichesCardDisplay extends Component
 {
-    public $currentCard = null;
-
-    public $currentCardPos = 0;
-
     public $cards = [];
+
+    public $currentCard = null;
 
     public $firstCardPos = 0;
 
     public $lastCardPos = 0;
+
+    public $currentCardPos = 0;
 
     /**
      * listen for client side events and then call respective methods...
@@ -24,39 +24,68 @@ class RichesCardDisplay extends Component
      */
     protected $listeners = [
         'riches-card-display' => 'render',
-        'delete-riches-card-display' => 'cardDeleted'
+        'display-card' => 'displayCard',
+        'delete-riches-card-display' => 'cardDeleted',
     ];
+
+    public function __construct($id = null)
+    {
+        parent::__construct($id);
+
+        $this->getAllCards();
+    }
 
     public function render()
     {
-        $this->getAllCards();
-
         return view('livewire.riches-card-display');
     }
 
-    /**
-     * used to set the currentCardPos on a delete.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function cardDeleted()
+    public function displayCard($id)
     {
-        // I need to replace the below array values with id's from the
-        // model.  I can then get the id from passed into this method
-        // to compare if the card being deleted is less than currentCardPos.
-        // then the below code will work, once I uncomment the below else
-        // statement.
-        $this->getAllCards(function() {
-            if ($this->currentCardPos > $this->lastCardPos) {
-                $this->currentCardPos = $this->currentCardPos -1;
-            }
-//            else
-//            if ($this->currentCardPos !== $this->firstCardPos){
-//                $this->currentCardPos = $this->currentCardPos -1;
-//            }
-        });
+        $this->currentCardPos = $id;
 
-        return view('livewire.riches-card-display');
+        $this->setCurrentCard();
+    }
+
+    /**
+     * after a card is deleted, determine the current card position.
+     *
+     * @param $id
+     */
+    public function cardDeleted($id)
+    {
+        $this->getAllCards(function() use($id) {
+
+            // deleting towards the beginning of the cards array
+            if ($id < $this->currentCardPos) {
+                return;
+            }
+            else
+            // deleting towards the ending of the cards array
+            if ($id > $this->currentCardPos) {
+                return;
+            }
+            else
+            // deleting first card
+            if ($id < $this->firstCardPos) {
+                $this->currentCardPos = $this->getNextCardsId($id);
+            }
+            else
+            // delete last card
+            if ($id > $this->lastCardPos) {
+                if ($this->currentCardPos <> $this->firstCardPos) {
+                    $this->currentCardPos = $this->getPreviousCardsId($id);
+                }
+            }
+            else
+            // deleting a selected card
+            if ($id == $this->currentCardPos) {
+                // the selected card is a middle card
+                if ($this->firstCardPos <> $this->lastCardPos) {
+                    $this->currentCardPos = $this->getPreviousCardsId($id);
+                }
+            }
+        });
     }
 
     /**
@@ -65,7 +94,7 @@ class RichesCardDisplay extends Component
     public function increment()
     {
         if ($this->currentCardPos < $this->lastCardPos) {
-            $this->currentCardPos++;
+            $this->currentCardPos = $this->getNextCardsId($this->currentCardPos);
 
             $this->setCurrentCard();
         }
@@ -76,7 +105,7 @@ class RichesCardDisplay extends Component
      */
     public function decrement() {
         if ($this->currentCardPos > $this->firstCardPos) {
-            $this->currentCardPos--;
+            $this->currentCardPos = $this->getPreviousCardsId($this->currentCardPos);
 
             $this->setCurrentCard();
         }
@@ -90,7 +119,6 @@ class RichesCardDisplay extends Component
     public function getAllCards($setCurrentPos = null)
     {
         // get cards from db; db returns a Collection type.
-        /** @var \Illuminate\Support\Collection $collection */
         $collection = DB::table('cards')
             ->get(['id','file_name']);
 
@@ -105,16 +133,21 @@ class RichesCardDisplay extends Component
 
         // populate the $this->cards array
         $collection->each(function ($card) {
-            $this->cards[] = 'img/alpha_SVG/'.$card->file_name;
+            $this->cards[$card->id] = 'img/alpha_SVG/'.$card->file_name;
         });
 
-        // set firstCardPos and currentCardPos to 0
-        $this->firstCardPos = 0;
+        // set firstCardPos
+        $this->firstCardPos = $collection->first()->id;
 
-        // get last card position
-        $this->lastCardPos = $collection->count() -1;
+        // set lastCardPos
+        $this->lastCardPos = $collection->last()->id;
 
         // set currentCardPos
+        if ($this->currentCardPos === 0) {
+            $this->currentCardPos = $this->firstCardPos;
+        }
+
+        // override currentCardPos if $setCurrentPos is not null
         if ($setCurrentPos !== null) {
             $setCurrentPos();
         }
@@ -130,4 +163,31 @@ class RichesCardDisplay extends Component
     {
         $this->currentCard = $this->cards[$this->currentCardPos];
     }
+
+    /**
+     * get next card id
+     *
+     * @return int
+     */
+    protected function getNextCardsId($id): int
+    {
+        $collection = DB::table('cards')
+            ->get(['id', 'file_name'])->where('id', '>', $id)->first();
+
+        return $collection->id;
+    }
+
+    /**
+     * get previous card id
+     *
+     * @return int
+     */
+    protected function getPreviousCardsId($id): int
+    {
+        $collection = DB::table('cards')
+            ->get(['id', 'file_name'])->where('id', '<', $id)->last();
+
+        return $collection->id;
+    }
+
 }
