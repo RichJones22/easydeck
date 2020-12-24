@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Controllers\FileUpload;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 
@@ -120,7 +121,7 @@ class RichesCardDisplay extends Component
     {
         // get cards from db; db returns a Collection type.
         $collection = DB::table('cards')
-            ->get(['id','file_name']);
+            ->get(['id','file_location','file_name']);
 
         // early exit, if there are no cards.
         if ($collection->isEmpty()) {
@@ -133,7 +134,7 @@ class RichesCardDisplay extends Component
 
         // populate the $this->cards array
         $collection->each(function ($card) {
-            $this->cards[$card->id] = 'img/alpha_SVG/'.$card->file_name;
+            $this->cards[$card->id] = FileUpload::SUB_DIR.'/'.$card->file_name;
         });
 
         // set firstCardPos

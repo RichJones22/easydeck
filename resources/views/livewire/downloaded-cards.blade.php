@@ -25,7 +25,7 @@
             </div>
 
             <button id="deleteCard" class="inline-flex rounded-md p-1.5" wire:click="delete('{{ $cardKey->id }}')">
-                <x-heroicon-s-trash class="w-6 h-6 text-red-600"/>
+                <x-heroicon-o-trash class="w-6 h-6 text-red-600"/>
             </button>
         </div>
         <hr>

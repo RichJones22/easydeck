@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Controllers\FileUpload;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 
@@ -34,7 +35,7 @@ class DownloadedCards extends Component
             ->get('file_name');
 
         if ($card->isNotEmpty()) {
-            unlink(storage_path('images').'/'.$card[0]->file_name);
+            unlink(public_path(FileUpload::SUB_DIR).'/'.$card[0]->file_name);
 
             DB::table('cards')->delete($id);
         }

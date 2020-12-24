@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\card;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use \Illuminate\Http\UploadedFile;
 
 class FileUpload extends Controller
 {
+
+    public CONST SUB_DIR = 'images';  // images dir off of the /public dir...
+
     /**
      * Display a listing of the resource.
      *
@@ -91,10 +95,10 @@ class FileUpload extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\UploadedFile|null $image
+     * @param UploadedFile|null $image
      * @param string $imageName
      */
-    protected function storeImage(?\Illuminate\Http\UploadedFile $image, string $imageName): void
+    protected function storeImage(?UploadedFile $image, string $imageName): void
     {
         $this->moveImageToFileSystem($image, $imageName);
 
@@ -102,12 +106,12 @@ class FileUpload extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\UploadedFile|null $image
+     * @param UploadedFile|null $image
      * @param string $imageName
      */
-    protected function moveImageToFileSystem(?\Illuminate\Http\UploadedFile $image, string $imageName): void
+    protected function moveImageToFileSystem(?UploadedFile $image, string $imageName): void
     {
-        $image->move(storage_path('images'), $imageName);
+        $image->move(public_path(FileUpload::SUB_DIR), $imageName);
     }
 
     /**
@@ -123,7 +127,7 @@ class FileUpload extends Controller
         if (!$this->doesImageExist($imageName)) {
             (new card())
                 ->setAttribute('file_name', $imageName)
-                ->setAttribute('file_location', storage_path('images'))
+                ->setAttribute('file_location', public_path(FileUpload::SUB_DIR))
                 ->save();
         }
     }
