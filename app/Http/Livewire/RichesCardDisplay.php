@@ -8,15 +8,15 @@ use Illuminate\Support\Facades\DB;
 
 class RichesCardDisplay extends Component
 {
-    public $cards = [];
+    public array $cards = [];
 
-    public $currentCard = null;
+    public string $currentCard = "";
 
-    public $firstCardPos = 0;
+    public int $firstCardPos = 0;
 
-    public $lastCardPos = 0;
+    public int $lastCardPos = 0;
 
-    public $currentCardPos = 0;
+    public int $currentCardPos = 0;
 
     /**
      * listen for client side events and then call respective methods...
@@ -25,7 +25,6 @@ class RichesCardDisplay extends Component
      */
     protected $listeners = [
         'riches-card-display' => 'render',
-        'display-card' => 'displayCard',
         'delete-riches-card-display' => 'cardDeleted',
     ];
 
@@ -39,13 +38,6 @@ class RichesCardDisplay extends Component
     public function render()
     {
         return view('livewire.riches-card-display');
-    }
-
-    public function displayCard($id)
-    {
-        $this->currentCardPos = $id;
-
-        $this->setCurrentCard();
     }
 
     /**
@@ -125,7 +117,7 @@ class RichesCardDisplay extends Component
 
         // early exit, if there are no cards.
         if ($collection->isEmpty()) {
-            $this->currentCard = null;
+            $this->currentCard = "";
             return;
         }
 
