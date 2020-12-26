@@ -25,6 +25,7 @@ class RichesCardDisplay extends Component
      */
     protected $listeners = [
         'riches-card-display' => 'render',
+        'display-card' => 'displayCard',
         'delete-riches-card-display' => 'cardDeleted',
     ];
 
@@ -38,6 +39,13 @@ class RichesCardDisplay extends Component
     public function render()
     {
         return view('livewire.riches-card-display');
+    }
+
+    public function displayCard($id)
+    {
+        $this->currentCardPos = $id;
+
+        $this->setCurrentCard();
     }
 
     /**

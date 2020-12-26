@@ -12,6 +12,12 @@ class DownloadedCards extends Component
 
     public $card;
 
+    public array $listOfCardId = [];
+
+    public int $firstCardId;
+
+    public int $lastCardId;
+
     protected $listeners = ['riches-card-display' => 'render'];
 
 
@@ -43,10 +49,31 @@ class DownloadedCards extends Component
         $this->emit('delete-riches-card-display', $id);
     }
 
+    public function editFileName($id = null)
+    {
+        // currently re-displaying list of cards.
+    }
+
 
     protected function getAllCards(): void
     {
         $this->cards = DB::table('cards')
-            ->get(['id', 'file_name']);
+            ->get(['id', 'file_name', 'title', 'description']);
+
+        if ($this->cards->isEmpty()) {
+            $this->listOfCardId = [];
+
+            $this->firstCardId = 0;
+            $this->lastCardId = 0;
+
+            return;
+        }
+
+        $this->cards->each(function($card) {
+            $this->listOfCardId[] = $card->id;
+        });
+
+        $this->firstCardId = $this->cards->first()->id;
+        $this->lastCardId = $this->cards->last()->id;
     }
 }
