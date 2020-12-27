@@ -16,6 +16,10 @@
         <hr>
     @endif
 
+{{--    @foreach($cards as $cardKey)--}}
+{{--        <span>{{ $cardKey->id }}</span>--}}
+{{--    @endforeach--}}
+
     @foreach($cards as $cardKey)
         <div class="flex justify-between">
             <div class="flex pt-3 pb-3">
@@ -28,33 +32,38 @@
                     >
                 </div>
 
-                <label for="fileName">
-                    <input id="fileName{{ $cardKey->id }}" class="italic ml-4" name="fileName" type="text" value="{{ $cardKey->file_name }}"  disabled>
-                </label>
-                <label for="title">
-                    <input id="title{{ $cardKey->id }}" class="ml-5" name="title" type="text" value="{{ $cardKey->title }}" disabled>
-                </label>
-                <label for="description">
-                    <input id="description{{ $cardKey->id }}" class="ml-5" name="description" type="text" value="{{ $cardKey->description }}" disabled>
-                </label>
+                <form>
+                    @csrf
+                    <label for="fileName">
+                        <input wire:model.defer="fileName"
+                               value="{{ $cardKey->file_name }}"
+                               id="fileName{{ $cardKey->id }}"
+                               class="italic ml-4"
+                               name="fileName"
+                               type="text"
+                               disabled>
+                    </label>
+                    <label for="description">
+                        <input id="description{{ $cardKey->id }}" class="ml-5" name="description" type="text" value="{{ $cardKey->description }}" disabled>
+                    </label>
+                    <label for="title">
+                        <input id="title{{ $cardKey->id }}" class="ml-5" name="title" type="text" value="{{ $cardKey->title }}" disabled>
+                    </label>
+                </form>
             </div>
 
             <div class="pt-3 pb-3">
                 <button id="editButtonPencil{{ $cardKey->id }}" class="inline-flex rounded-md"
-                        onclick="toggleRadio({{ $cardKey->id }}, !!toggle)"
-                        wire:click="$emit('display-card','{{ $cardKey->id }}')"
-                >
+                        onclick="showCardFields({{ $cardKey->id }})"
+                        wire:click="$emit('display-card','{{ $cardKey->id }}')">
                     <x-heroicon-o-pencil id="editCardPencil{{ $cardKey->id }}" class="w-6 h-6 text-gray-600"/>
                 </button>
                 <button id="editButtonServer{{ $cardKey->id }}" class="inline-flex rounded-md"
-                        onclick="toggleRadio({{ $cardKey->id }}, !!toggle)"
-                        wire:click="editFileName()"
-                >
+                        wire:click="editCard()">
                     <x-heroicon-o-server id="editCardServer{{ $cardKey->id }}" class="w-6 h-6 text-blue-600" hidden/>
                 </button>
                 <button id="deleteCard{{ $cardKey->id }}" class="inline-flex rounded-md p-1.5"
-                        wire:click="delete('{{ $cardKey->id }}')"
-                >
+                        wire:click="delete('{{ $cardKey->id }}')">
                     <x-heroicon-o-trash class="w-6 h-6 text-red-600"/>
                 </button>
             </div>
@@ -63,37 +72,67 @@
     @endforeach
 
     <script>
-        let toggle = false;
 
-        function toggleRadio(cardId, toggle){
-            if (!toggle) {
-                document.getElementById('fileName'+cardId).removeAttribute("disabled");
-                document.getElementById('fileName'+cardId).classList.add("border");
-                document.getElementById('fileName'+cardId).classList.add("border-blue-500");
-                document.getElementById('title'+cardId).removeAttribute("disabled");
-                document.getElementById('title'+cardId).classList.add("border");
-                document.getElementById('title'+cardId).classList.add("border-blue-500");
-                document.getElementById('description'+cardId).removeAttribute("disabled");
-                document.getElementById('description'+cardId).classList.add("border");
-                document.getElementById('description'+cardId).classList.add("border-blue-500");
-                document.getElementById('editCardPencil'+cardId).style.display = "none";
-                document.getElementById('editCardServer'+cardId).style.display = "block";
-                document.getElementById('fileName'+cardId).focus();
-                this.toggle = true;
+        // event listener for server side events
+        Livewire.on('delete-riches-card-display', cards => {
+            displayValues(cards);
+        });
 
-                disableTheRest()
+        // plain javascript document ready logic...
+        function docReady(fn) {
+            // see if DOM is already available
+            if (document.readyState === "complete" || document.readyState === "interactive") {
+                // call on next available tick
+                setTimeout(fn, 1);
             } else {
-                document.getElementById('fileName'+cardId).setAttribute("disabled", "true");
-                document.getElementById('title'+cardId).setAttribute("disabled", "true");
-                document.getElementById('description'+cardId).setAttribute("disabled", "true");
-                document.getElementById('editCardPencil'+cardId).style.display = "block";
-                document.getElementById('editCardServer'+cardId).style.display = "none";
-                this.toggle = false;
+                document.addEventListener("DOMContentLoaded", fn);
+            }
+        }
+        docReady(function() {
+            setTimeout(function(){
+                displayValues();
+            }, 1);
+        });
+
+        // enable the card column values for a specific cardId
+        function showCardFields(cardId) {
+            document.getElementById('fileName' + cardId).removeAttribute("disabled");
+            document.getElementById('fileName' + cardId).classList.add("border");
+            document.getElementById('fileName' + cardId).classList.add("border-blue-500");
+            document.getElementById('title' + cardId).removeAttribute("disabled");
+            document.getElementById('title' + cardId).classList.add("border");
+            document.getElementById('title' + cardId).classList.add("border-blue-500");
+            document.getElementById('description' + cardId).removeAttribute("disabled");
+            document.getElementById('description' + cardId).classList.add("border");
+            document.getElementById('description' + cardId).classList.add("border-blue-500");
+            document.getElementById('editCardPencil' + cardId).style.display = "none";
+            document.getElementById('editCardServer' + cardId).style.display = "block";
+            document.getElementById('fileName' + cardId).focus();
+
+            disableTheRest();
+        }
+
+        // redisplay the value property of the fileName input field.
+        // for some reason the 'wire:model.defer="fileName"' causes the
+        // value property not to display.
+        function displayValues(cards) {
+            let listOfCardIds = [];
+
+            if (cards == null) {
+                listOfCardIds = @json($cards);
+            } else {
+                listOfCardIds = cards;
+            }
+
+            for (let i = 0; i < listOfCardIds.length; i++) {
+                document.getElementById('fileName'+listOfCardIds[i].id).value = listOfCardIds[i].file_name;
             }
         }
 
+        // disable all the other edit and delete button on the page.
         function disableTheRest() {
-            let listOfCardIds = @json($listOfCardId);
+            let listOfCardIds = [];
+            listOfCardIds = @json($listOfCardId);
 
             for (let i = 0; i < listOfCardIds.length; i++) {
                 document.getElementById('editButtonPencil'+listOfCardIds[i]).setAttribute("disabled", "true");

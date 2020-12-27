@@ -19,6 +19,7 @@
         @livewireScripts
 
         <script>
+                // will remove the flash message after .5 seconds.
                 setTimeout(function() {
                     var loader = document.getElementById("autoRemove");
                     loader.style.transition = '.5s';

@@ -18,6 +18,8 @@ class DownloadedCards extends Component
 
     public int $lastCardId;
 
+    public string $fileName = "";
+
     protected $listeners = ['riches-card-display' => 'render'];
 
 
@@ -46,12 +48,16 @@ class DownloadedCards extends Component
             DB::table('cards')->delete($id);
         }
 
-        $this->emit('delete-riches-card-display', $id);
+        $this->getAllCards();
+        $this->emit('delete-riches-card-display', $this->cards);
     }
 
-    public function editFileName($id = null)
+    public function editCard()
     {
-        // currently re-displaying list of cards.
+//        dd($this->fileName);
+
+        $this->getAllCards();
+        $this->emit('delete-riches-card-display', $this->cards);
     }
 
 
