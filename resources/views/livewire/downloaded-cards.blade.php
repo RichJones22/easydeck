@@ -54,7 +54,7 @@
 
             <div class="pt-3 pb-3">
                 <button id="editButtonPencil{{ $cardKey->id }}" class="inline-flex rounded-md"
-                        onclick="showCardFields({{ $cardKey->id }})"
+                        onclick="showCardFields({{ $cardKey->id }}, {{ $cards }})"
                         wire:click="$emit('display-card','{{ $cardKey->id }}')">
                     <x-heroicon-o-pencil id="editCardPencil{{ $cardKey->id }}" class="w-6 h-6 text-gray-600"/>
                 </button>
@@ -95,7 +95,7 @@
         });
 
         // enable the card column values for a specific cardId
-        function showCardFields(cardId) {
+        function showCardFields(cardId, cards) {
             document.getElementById('fileName' + cardId).removeAttribute("disabled");
             document.getElementById('fileName' + cardId).classList.add("border");
             document.getElementById('fileName' + cardId).classList.add("border-blue-500");
@@ -109,7 +109,7 @@
             document.getElementById('editCardServer' + cardId).style.display = "block";
             document.getElementById('fileName' + cardId).focus();
 
-            disableTheRest();
+            disableTheRest(cards);
         }
 
         // redisplay the value property of the fileName input field.
@@ -130,13 +130,13 @@
         }
 
         // disable all the other edit and delete button on the page.
-        function disableTheRest() {
+        function disableTheRest(cards) {
             let listOfCardIds = [];
-            listOfCardIds = @json($listOfCardId);
+            listOfCardIds = cards;
 
             for (let i = 0; i < listOfCardIds.length; i++) {
-                document.getElementById('editButtonPencil'+listOfCardIds[i]).setAttribute("disabled", "true");
-                document.getElementById('deleteCard'+listOfCardIds[i]).setAttribute("disabled", "true");
+                document.getElementById('editButtonPencil'+listOfCardIds[i].id).setAttribute("disabled", "true");
+                document.getElementById('deleteCard'+listOfCardIds[i].id).setAttribute("disabled", "true");
             }
         }
     </script>
