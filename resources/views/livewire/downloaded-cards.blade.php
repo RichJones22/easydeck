@@ -74,7 +74,7 @@
     <script>
 
         // event listener for server side events
-        Livewire.on('delete-riches-card-display', cards => {
+        Livewire.on('add-card-file-names-back', cards => {
             displayValues(cards);
         });
 

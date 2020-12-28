@@ -49,7 +49,8 @@ class DownloadedCards extends Component
         }
 
         $this->getAllCards();
-        $this->emit('delete-riches-card-display', $this->cards);
+        $this->emit('delete-riches-card-display', $id);
+        $this->emit('add-card-file-names-back', $this->cards);
     }
 
     public function editCard()
@@ -57,7 +58,7 @@ class DownloadedCards extends Component
 //        dd($this->fileName);
 
         $this->getAllCards();
-        $this->emit('delete-riches-card-display', $this->cards);
+        $this->emit('add-card-file-names-back', $this->cards);
     }
 
 
