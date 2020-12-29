@@ -63,16 +63,31 @@ class DownloadedCards extends Component
             ->get()
             ->where('id', '=', $id);
 
+        // none 0 length file_name
         if (strlen($this->fileName)) {
-            if ($this->fileName !== $collection->first()->file_name) {
-                rename($collection->first()->file_location.'/'.$collection->first()->file_name
-                    ,$collection->first()->file_location.'/'.$this->fileName);
 
-                DB::table('cards')
-                    ->where('id', '=', $id)
-                    ->update([
-                        'file_name' => $this->fileName,
-                    ]);
+            // the is a change
+            if ($this->fileName !== $collection->first()->file_name) {
+
+                // last 4 chars of file_name must be .svg
+                if (strtolower(substr($this->fileName, (strlen($this->fileName) - 4), 4)) === '.svg') {
+                    $count = DB::table('cards')
+                        ->get()
+                        ->where('file_name', '=', $this->fileName)
+                        ->count();
+
+                    // can't rename a file to and existing file_name
+                    if (!$count) {
+                        rename($collection->first()->file_location.'/'.$collection->first()->file_name
+                            ,$collection->first()->file_location.'/'.$this->fileName);
+
+                        DB::table('cards')
+                            ->where('id', '=', $id)
+                            ->update([
+                                'file_name' => $this->fileName,
+                            ]);
+                    }
+                }
             }
         }
 
