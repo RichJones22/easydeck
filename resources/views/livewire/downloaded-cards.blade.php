@@ -11,21 +11,27 @@
         <div>download some cards...</div>
     @endif
 
-{{--     display the post, and allow for post deletion --}}
+{{--    display header --}}
+    @if($cards->isNotEmpty())
+    <div class="flex justify-between">
+        <div class="h-8 w-9"></div>
+        <div class="container">
+            <div class="flex justify-between">
+                <div class="font-bold ml-4">File Name</div>
+                <div class="font-bold mr-8">Title</div>
+                <div class="font-bold ml-1">Description</div>
+                <div class="h-8 w-20"></div>
+            </div>
+        </div>
+    </div>
+    @endif
+
+    {{--     display the post, and allow for post deletion --}}
     @if($cards->isNotEmpty())
         <hr>
     @endif
 
-{{--    @foreach($cards as $cardKey)--}}
-{{--        <span>{{ $cardKey->id }}</span>--}}
-{{--    @endforeach--}}
-
     @foreach($cards as $cardKey)
-        <div class="flex justify-between">
-            <span class="pl-13 font-bold hidden" id="fileNameSpan{{ $cardKey->id }}">File Name</span>
-            <span class="font-bold hidden" id="fileTitleSpan{{ $cardKey->id }}">Title</span>
-            <span class="font-bold hidden" id="fileDescriptionSpan{{ $cardKey->id }}">Description</span>
-        </div>
         <div class="flex justify-between">
             <div class="flex pt-3 pb-3">
                 <div wire:click="$emit('display-card','{{ $cardKey->id }}')" class="flex cursor-pointer bg-gray-200 overflow-hidden shadow-xl sm:rounded-lg text-sm border-2 rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
@@ -41,7 +47,6 @@
                     @csrf
                     <label for="fileName">
                         <input wire:model.defer="fileName"
-{{--                               value="{{ $cardKey->file_name }}"--}}
                                id="fileName{{ $cardKey->id }}"
                                class="italic ml-4"
                                name="fileName"
@@ -50,7 +55,6 @@
                     </label>
                     <label for="title">
                         <input wire:model.defer="fileNameTitle"
-{{--                               value="{{ $cardKey->title }}"--}}
                                id="title{{ $cardKey->id }}"
                                class="ml-5"
                                name="title"
@@ -59,7 +63,6 @@
                     </label>
                     <label for="description">
                         <input wire:model.defer="fileNameDescription"
-{{--                               value="{{ $cardKey->description }}"--}}
                                id="description{{ $cardKey->id }}"
                                class="ml-5"
                                name="description"
@@ -90,7 +93,24 @@
 
     <script>
 
-        // event listener for server side events
+        // // local listeners
+        // const Title = document.querySelector('input[name="title"]');
+        // const Description = document.querySelector('input[name="description"]');
+        // Title.addEventListener('blur', (event) => {
+        //
+        //     // console.log(event.target);
+        //
+        //     if (event.target.name === 'title' ||
+        //         event.target.name === 'description') {
+        //         if (event.target.value === "") {
+        //             console.log('string is:' + event.target.value + ':');
+        //             event.target.value = "-1";
+        //             console.log('now the string is:' + event.target.value + ':');
+        //         }
+        //     }
+        // });
+
+        // server side listeners
         Livewire.on('add-card-file-names-back', cards => {
             displayValues(cards);
         });
@@ -122,9 +142,6 @@
             document.getElementById('description' + cardId).removeAttribute("disabled");
             document.getElementById('description' + cardId).classList.add("border");
             document.getElementById('description' + cardId).classList.add("border-blue-500");
-            // document.getElementById('fileNameSpan' + cardId).style.display = "flex";
-            // document.getElementById('fileTitleSpan' + cardId).style.display = "flex";
-            // document.getElementById('fileDescriptionSpan' + cardId).style.display = "flex";
             document.getElementById('editCardPencil' + cardId).style.display = "none";
             document.getElementById('editCardServer' + cardId).style.display = "block";
             document.getElementById('fileName' + cardId).focus();

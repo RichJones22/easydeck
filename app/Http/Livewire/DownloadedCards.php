@@ -24,7 +24,9 @@ class DownloadedCards extends Component
 
     public string $fileNameDescription = "";
 
-    protected $listeners = ['riches-card-display' => 'render'];
+    protected $listeners = [
+        'riches-card-display' => 'render',
+    ];
 
 
     public function render()
@@ -66,7 +68,7 @@ class DownloadedCards extends Component
         // none 0 length file_name
         if (strlen($this->fileName)) {
 
-            // the is a change
+            // is there a change
             if ($this->fileName !== $collection->first()->file_name) {
 
                 // last 4 chars of file_name must be .svg
@@ -91,20 +93,34 @@ class DownloadedCards extends Component
             }
         }
 
-        if ($this->fileNameTitle !== $collection->first()->title) {
-            DB::table('cards')
-                ->where('id', '=', $id)
-                ->update([
-                    'title' => $this->fileNameTitle,
-                ]);
+        if (strlen($this->fileNameTitle)) {
+
+            if (ctype_space($this->fileNameTitle)) {
+                $this->fileNameTitle = "";
+            }
+
+            if ($this->fileNameTitle !== $collection->first()->title) {
+                DB::table('cards')
+                    ->where('id', '=', $id)
+                    ->update([
+                        'title' => $this->fileNameTitle,
+                    ]);
+            }
         }
 
-        if ($this->fileNameDescription !== $collection->first()->description) {
-            DB::table('cards')
-                ->where('id', '=', $id)
-                ->update([
-                    'description' => $this->fileNameDescription,
-                ]);
+        if (strlen($this->fileNameDescription)) {
+
+            if (ctype_space($this->fileNameDescription)) {
+                $this->fileNameDescription = "";
+            }
+
+            if ($this->fileNameDescription !== $collection->first()->description) {
+                DB::table('cards')
+                    ->where('id', '=', $id)
+                    ->update([
+                        'description' => $this->fileNameDescription,
+                    ]);
+            }
         }
 
         $this->getAllCards();
