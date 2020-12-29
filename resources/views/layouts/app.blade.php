@@ -19,6 +19,7 @@
         <!-- Scripts -->
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.js" defer></script>
+        @livewireScripts
 
     </head>
     <body class="font-sans antialiased">
@@ -39,8 +40,6 @@
         </div>
 
         @stack('modals')
-
-        @livewireScripts
 
     </body>
 </html>
