@@ -20,6 +20,10 @@ class DownloadedCards extends Component
 
     public string $fileName = "";
 
+    public string $fileNameTitle = "";
+
+    public string $fileNameDescription = "";
+
     protected $listeners = ['riches-card-display' => 'render'];
 
 
@@ -53,9 +57,40 @@ class DownloadedCards extends Component
         $this->emit('add-card-file-names-back', $this->cards);
     }
 
-    public function editCard()
+    public function editCard($id)
     {
-//        dd($this->fileName);
+        $collection = DB::table('cards')
+            ->get()
+            ->where('id', '=', $id);
+
+        if (strlen($this->fileName)) {
+            if ($this->fileName !== $collection->first()->file_name) {
+                rename($collection->first()->file_location.'/'.$collection->first()->file_name
+                    ,$collection->first()->file_location.'/'.$this->fileName);
+
+                DB::table('cards')
+                    ->where('id', '=', $id)
+                    ->update([
+                        'file_name' => $this->fileName,
+                    ]);
+            }
+        }
+
+        if ($this->fileNameTitle !== $collection->first()->title) {
+            DB::table('cards')
+                ->where('id', '=', $id)
+                ->update([
+                    'title' => $this->fileNameTitle,
+                ]);
+        }
+
+        if ($this->fileNameDescription !== $collection->first()->description) {
+            DB::table('cards')
+                ->where('id', '=', $id)
+                ->update([
+                    'description' => $this->fileNameDescription,
+                ]);
+        }
 
         $this->getAllCards();
         $this->emit('add-card-file-names-back', $this->cards);
