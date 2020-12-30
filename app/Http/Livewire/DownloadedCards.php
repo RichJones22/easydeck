@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Http\Controllers\FileUpload;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 
@@ -20,9 +21,9 @@ class DownloadedCards extends Component
 
     public string $fileName = "";
 
-    public string $fileNameTitle = "";
+    public string $fileNameTitle = "\t";        // init to FirstTimeThru - a tab
 
-    public string $fileNameDescription = "";
+    public string $fileNameDescription = "\t";  // init to FirstTimeThru - a tab
 
     protected $listeners = [
         'riches-card-display' => 'render',
@@ -68,59 +69,80 @@ class DownloadedCards extends Component
         // none 0 length file_name
         if (strlen($this->fileName)) {
 
-            // is there a change
-            if ($this->fileName !== $collection->first()->file_name) {
+            // there can be no spaces
+            if (!Str::contains($this->fileName, " ")) {
+//            if (!preg_match('/\s/',$this->fileName)) {
 
-                // last 4 chars of file_name must be .svg
-                if (strtolower(substr($this->fileName, (strlen($this->fileName) - 4), 4)) === '.svg') {
-                    $count = DB::table('cards')
-                        ->get()
-                        ->where('file_name', '=', $this->fileName)
-                        ->count();
+                // there must be a change
+                if ($this->fileName !== $collection->first()->file_name) {
 
-                    // can't rename a file to and existing file_name
-                    if (!$count) {
-                        rename($collection->first()->file_location.'/'.$collection->first()->file_name
-                            ,$collection->first()->file_location.'/'.$this->fileName);
+                    // last 4 chars of file_name must be .svg
+                    if (strtolower(substr($this->fileName, (strlen($this->fileName) - 4), 4)) === '.svg') {
+                        $count = DB::table('cards')
+                            ->get()
+                            ->where('file_name', '=', $this->fileName)
+                            ->count();
 
-                        DB::table('cards')
-                            ->where('id', '=', $id)
-                            ->update([
-                                'file_name' => $this->fileName,
-                            ]);
+                        // can't rename a file to and existing file_name
+                        if (!$count) {
+                            rename($collection->first()->file_location.'/'.$collection->first()->file_name
+                                ,$collection->first()->file_location.'/'.$this->fileName);
+
+                            DB::table('cards')
+                                ->where('id', '=', $id)
+                                ->update([
+                                    'file_name' => $this->fileName,
+                                ]);
+                        }
                     }
                 }
             }
         }
 
-        if (strlen($this->fileNameTitle)) {
+        if ($this->fileNameTitle !== $collection->first()->title) {
 
-            if (ctype_space($this->fileNameTitle)) {
-                $this->fileNameTitle = "";
+            if ($collection->first()->title === null) {
+                $collection->first()->title = "";
             }
 
-            if ($this->fileNameTitle !== $collection->first()->title) {
-                DB::table('cards')
-                    ->where('id', '=', $id)
-                    ->update([
-                        'title' => $this->fileNameTitle,
-                    ]);
+            if ($this->fileNameTitle === "\t") {
+                $this->fileNameTitle = $collection->first()->title;
             }
+
+            $value = $this->fileNameTitle;
+
+            if (strlen($this->fileNameTitle) === 0) {
+                $value = null;
+            }
+
+            DB::table('cards')
+                ->where('id', '=', $id)
+                ->update([
+                    'title' => $value,
+                ]);
         }
 
-        if (strlen($this->fileNameDescription)) {
+        if ($this->fileNameDescription !== $collection->first()->description) {
 
-            if (ctype_space($this->fileNameDescription)) {
-                $this->fileNameDescription = "";
+            if ($collection->first()->description === null) {
+                $collection->first()->description = "";
             }
 
-            if ($this->fileNameDescription !== $collection->first()->description) {
-                DB::table('cards')
-                    ->where('id', '=', $id)
-                    ->update([
-                        'description' => $this->fileNameDescription,
-                    ]);
+            if ($this->fileNameDescription === "\t") {
+                $this->fileNameDescription = $collection->first()->description;
             }
+
+            $value = $this->fileNameDescription;
+
+            if (strlen($this->fileNameDescription) === 0) {
+                $value = null;
+            }
+
+            DB::table('cards')
+                ->where('id', '=', $id)
+                ->update([
+                    'description' => $value,
+                ]);
         }
 
         $this->getAllCards();

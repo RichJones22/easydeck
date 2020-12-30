@@ -93,19 +93,21 @@
 
     <script>
 
-        // // local listeners
+        // // // local listeners
         // const Title = document.querySelector('input[name="title"]');
         // const Description = document.querySelector('input[name="description"]');
         // Title.addEventListener('blur', (event) => {
         //
-        //     // console.log(event.target);
-        //
+        //     // problem: on initial page load the .defer option was not
+        //     // populating the .value, such that when the request gets
+        //     // to the server, the title and description values were
+        //     // empty strings.
+        //     // solution: was to remove the wire:model.defer attribute...
         //     if (event.target.name === 'title' ||
         //         event.target.name === 'description') {
         //         if (event.target.value === "") {
-        //             console.log('string is:' + event.target.value + ':');
-        //             event.target.value = "-1";
-        //             console.log('now the string is:' + event.target.value + ':');
+        //             event.target.removeAttribute("wire:model.defer");
+        //             // console.log(event);
         //         }
         //     }
         // });
