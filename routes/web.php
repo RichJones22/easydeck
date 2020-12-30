@@ -69,11 +69,6 @@ Route::get('/article/{post:slug}', 'PostController@show')->name('post.show');
 Route::post('/comment/store', 'CommentController@store')->name('comment.add');
 Route::post('/reply/store', 'CommentController@replyStore')->name('reply.add');
 
-
-Route::get('/landing', function () {
-    return view('components.landing-layout');
-})->name('components.landing-layout');
-
 Route::get('/lessons', function () {
     return view('lessons');
 })->name('lessons');
@@ -81,6 +76,14 @@ Route::get('/lessons', function () {
 Route::get('/lessons-menu', function () {
     return view('lessons-menu');
 })->name('lessons-menu');
+
+Route::get('/lesson-deck', function () {
+    return view('lesson-deck');
+})->name('lesson-deck');
+
+
+
+
 
 
 

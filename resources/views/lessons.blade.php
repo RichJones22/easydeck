@@ -16,10 +16,76 @@
                 <link rel="stylesheet" href="{{ asset('css/app.css') }}">
                 @livewireStyles
             </head>
-            <body class="font-serif bg-green text-grey-900">
+            <body class="font-serif bg-gray-700 bg-opacity-100 text-grey-100">
+            <div class="bg-gray-200 bg-opacity-100 max-w-max h-screen">
+               <div class="bg-gray-500 bg-opacity-100 h-screen w-3/4">
+                   <div class="flex flex-wrap h-1/2">
+                       <div class="bg-blue-100 bg-opacity-100 h-full w-1/4">
+                           a
+                       </div>
+                       <div class="bg-blue-400 bg-opacity-100 h-full w-1/2">
+                           b
+                       </div>
+                       <div class="bg-blue-600 bg-opacity-100 h-full w-1/4">
+                           <div>
+                               <h3>active dotComs:</h3>
+                                   <ul>
+                                       <li>
+                                           <a href="/221/" class="design-name">burousu</a>
+                                       </li>
+                                       <li>
+                                           <a href="/220/" class="design-name">BruHow</a>
+                                       </li>
+                                       <li>
+                                           <a href="/219/" class="design-name">BruHowonAir</a>
+                                       </li>
+                                       <li>
+                                           <a href="/218/" class="design-name">dawge</a>
+                                       </li>
+                                       <li>
+                                           <a href="/217/" class="design-name">teddyBeast</a>
+                                       </li>
+                                       <li>
+                                           <a href="/216/" class="design-name">OneMinuteCircus</a>
+                                       </li>
+                                   </ul>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+            </div>
 
-            <!-- Primary Page Layout
 
+
+
+
+{{--    <div class="w-7/8 flex-col bg-black shadow-lg rounded-lg overflow-hidden">--}}
+{{--        <div class="w-3/4 bg-gray-200 text-gray-700 text-lg px-6 py-4">--}}
+{{--            @{{ Logo }}--}}
+{{--        </div>--}}
+{{--        <div  class="w-3/4 bg-gray-600 flex justify-between items-center px-6 py-4">--}}
+{{--            <div  class="bg-orange-600 text-xs uppercase px-2 py-1 rounded-full border border-gray-200 font-bold">@{{ Title }}</div>--}}
+{{--            <div  class="">@{{ Suit }}</div>--}}
+{{--        </div>--}}
+{{--        <div class="">--}}
+{{--            <div class="">--}}
+{{--                @{{ Card }}--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--        <div class="bg-white">--}}
+{{--            <div class="bg-gray-100 text-xs text-gray-800 font-bold">--}}
+{{--                @{{ Description }}--}}
+{{--            </div>--}}
+{{--            <div class="bg-gray-200 px-6 py-4">--}}
+{{--                <div class="">eD</div>--}}
+{{--                <div>--}}
+{{--                    <p class="">easyDecks</p>--}}
+{{--                    <p class="">AlphaDeck</p>--}}
+{{--                </div>--}}
+
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
             <!--NewLayout
 –––––––––––––––––––––––––––––––––––––––––––––––––– -->
             <div class="h-screen flex flex-wrap">
