@@ -24,7 +24,7 @@ class RichesCardDisplay extends Component
      * @var string[]
      */
     protected $listeners = [
-        'riches-card-display' => 'render',
+//        'riches-card-display' => 'render',
         'display-card' => 'displayCard',
         'delete-riches-card-display' => 'cardDeleted',
     ];

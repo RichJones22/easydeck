@@ -9,11 +9,15 @@ use Illuminate\Support\Facades\DB;
 
 class DownloadedCards extends Component
 {
+
+    public CONST FTT = "\t";  // first time thru indicator, a tab...
+
+
     public $cards = [];
 
     public $card;
 
-    public array $listOfCardId = [];
+//    public array $listOfCardId = [];
 
     public int $firstCardId;
 
@@ -21,12 +25,12 @@ class DownloadedCards extends Component
 
     public string $fileName = "";
 
-    public string $fileNameTitle = "\t";        // init to FirstTimeThru - a tab
+    public string $fileNameTitle = DownloadedCards::FTT;
 
-    public string $fileNameDescription = "\t";  // init to FirstTimeThru - a tab
+    public string $fileNameDescription = DownloadedCards::FTT;
 
     protected $listeners = [
-        'riches-card-display' => 'render',
+//        'riches-card-display' => 'render',
     ];
 
 
@@ -105,7 +109,7 @@ class DownloadedCards extends Component
                 $collection->first()->title = "";
             }
 
-            if ($this->fileNameTitle === "\t") {
+            if ($this->fileNameTitle === DownloadedCards::FTT) {
                 $this->fileNameTitle = $collection->first()->title;
             }
 
@@ -128,7 +132,7 @@ class DownloadedCards extends Component
                 $collection->first()->description = "";
             }
 
-            if ($this->fileNameDescription === "\t") {
+            if ($this->fileNameDescription === DownloadedCards::FTT) {
                 $this->fileNameDescription = $collection->first()->description;
             }
 
@@ -156,7 +160,7 @@ class DownloadedCards extends Component
             ->get(['id', 'file_name', 'title', 'description']);
 
         if ($this->cards->isEmpty()) {
-            $this->listOfCardId = [];
+//            $this->listOfCardId = [];
 
             $this->firstCardId = 0;
             $this->lastCardId = 0;
@@ -164,9 +168,11 @@ class DownloadedCards extends Component
             return;
         }
 
-        $this->cards->each(function($card) {
-            $this->listOfCardId[] = $card->id;
-        });
+//        $this->listOfCardId[] = $this->cards->toArray();
+
+//        $this->cards->each(function($card) {
+//            $this->listOfCardId[] = $card->id;
+//        });
 
         $this->firstCardId = $this->cards->first()->id;
         $this->lastCardId = $this->cards->last()->id;
